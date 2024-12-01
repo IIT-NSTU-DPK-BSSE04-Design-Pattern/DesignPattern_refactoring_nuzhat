@@ -1,0 +1,20 @@
+
+P
+java:S1854"5Remove this useless assignment to local variable "d".(Þ†»ßøÿÿÿÿ
+@
+java:S1197"*Move the array designators [] to the type.(¨ÅÙþ
+A
+java:S1481"&Remove this unused "d" local variable.(Þ†»ßøÿÿÿÿ
+V	java:S125"<This block of commented-out lines of code should be removed.(˜ÙÃÆýÿÿÿÿ
+Q	java:S125!"<This block of commented-out lines of code should be removed.(ÀÖŠ
+Y
+java:S1854?">Remove this useless assignment to local variable "chartPanel".(»—¹“ùÿÿÿÿ
+b
+java:S3252("LUse static access with "javax.swing.WindowConstants" for "DISPOSE_ON_CLOSE".(§ýÏÁ
+V	java:S125,"<This block of commented-out lines of code should be removed.(·Ô¥™ùÿÿÿÿ
+Y
+java:S1117?">Rename "chartPanel" which hides the field declared at line 22.(»—¹“ùÿÿÿÿ
+J
+java:S1481?"/Remove this unused "chartPanel" local variable.(»—¹“ùÿÿÿÿ
+Q	java:S125A"<This block of commented-out lines of code should be removed.(Žš±ñ
+h	java:S100M"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”Ñúäùÿÿÿÿ
