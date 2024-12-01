@@ -35,44 +35,31 @@ public class BoxAndWhiskerChart {
     }
 
     public void display() {
-        JFrame f = new JFrame("Clone_Check");
+        JFrame frame = createFrame("Clone_Check");
+        DefaultBoxAndWhiskerCategoryDataset dataset = buildDataset();
+        JFreeChart chart = createChart(dataset);
+        ChartPanel chartPanel = createChartPanel(chart);
 
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        DefaultBoxAndWhiskerCategoryDataset boxData = new DefaultBoxAndWhiskerCategoryDataset();
-
-        for (int i = 0; i < CosineSimilarity.similarArray.size(); i++) {
-            // System.out.println("p="+CosineSimilarity.similarArray.g);
-            boxData.add(getInputData(CosineSimilarity.similarArray.get(i)), "First_Project vs Second_Project", CloneCheck.ProjectFileName1.get(i));
-        }
-        BoxAndWhiskerRenderer renderer = new BoxAndWhiskerRenderer();
-        renderer.setFillBox(true);
-        renderer.setUseOutlinePaintForWhiskers(true);
-
-        renderer.setMedianVisible(true);
-        renderer.setMeanVisible(false);
-
-        CategoryAxis xAxis = new CategoryAxis("First_Project_Files");
-        NumberAxis yAxis = new NumberAxis("Second_Project_Values");
-        CategoryPlot plot = new CategoryPlot(boxData, xAxis, yAxis, renderer);
-        final JFreeChart chart = new JFreeChart(
-                "Box-and-Whisker Plot",
-                new Font("SansSerif", Font.BOLD, 20),
-                plot,
-                true
-        );
-        final ChartPanel chartPanel = new ChartPanel(chart);
-        chart.setBackgroundPaint(Color.LIGHT_GRAY);
-        //   JFreeChart chart = new JFreeChart("Test", JFreeChart.DEFAULT_TITLE_FONT, plot, true);
-        f.add(new ChartPanel(chart) {
-            @Override
-            public Dimension getPreferredSize() {
-                return new Dimension(600, 600);
-            }
-        });
-        f.pack();
-        f.setLocationRelativeTo(null);
-        f.setVisible(true);
+        frame.add(chartPanel);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
+
+    // Creates the JFrame
+    private JFrame createFrame(String title) {
+        JFrame frame = new JFrame(title);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        return frame;
+    }
+
+    // Creates the ChartPanel
+    private ChartPanel createChartPanel(JFreeChart chart) {
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(DEFAULT_DIMENSION);
+        return chartPanel;
+    }
+
 
     public static void BoxWhisker() {
         EventQueue.invokeLater(new BoxAndWhiskerChart()::display);

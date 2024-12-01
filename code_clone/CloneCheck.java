@@ -71,58 +71,26 @@ public class CloneCheck {
     }
      */
     public void Code_clone(String project1, String project2) throws IOException {
-        String Pathname1 = pathGenerate(project1);  //H:\2-1\project\ProcessAllFiles\ProcessFile$H-new
-        String Pathname2 = pathGenerate(project2);
+        // Step 1: Generate paths
+        path1 = generateProjectPath(project1);
+        path2 = generateProjectPath(project2);
 
-        File f1 = new File(Pathname1);
-        File f2 = new File(Pathname2);
-        if (!f1.exists()) {
-            ProjectReader.fileRead(Command.currentPath + "//" + project1, 0);
-          
-            Path p1 = Paths.get(Pathname1);
-            Files.createDirectories(p1);
+        // Step 2: Preprocess project files
+        preprocessProjectFiles(project1, path1, ProjectReader.projectOne);
+        preprocessProjectFiles(project2, path2, ProjectReader.projectTwo);
 
-            for (HashMap.Entry<String, String> entry : ProjectReader.projectOne.entrySet()) {
-                new PreProcessing().ProcessFile(entry.getKey(), entry.getValue(), Pathname1); //entry.getKey()-filename with package
-            }
-        }
-        getFileListforProject1(project1);
-        path1 = Pathname1;
-        if (!f2.exists()) {
-            ProjectReader.fileRead(Command.currentPath + "//" + project2, 1);
-            //  System.out.println("p2=" + Command.currentPath);
-            Path p2 = Paths.get(Pathname2);
-            Files.createDirectories(p2);
+        // Step 3: Retrieve file lists
+        retrieveFileList(project1, path1, ProjectFileName1);
+        retrieveFileList(project2, path2, ProjectFileName2);
 
-            for (HashMap.Entry<String, String> entry : ProjectReader.projectTwo.entrySet()) {
-                //System.out.println(entry.getKey() + "   " + entry.getValue());
-                new PreProcessing().ProcessFile(entry.getKey(), entry.getValue(), Pathname2);
-            }
+        // Step 4: Perform TF-IDF and cosine similarity calculations
+        performTfIdfCalculations(path1, path2);
+        new CosineSimilarity().getCosinesimilarity();
 
-        }
-        getFileListforProject2(project2);
-        path2 = Pathname2;
-        TfIdfCalculate ob = new TfIdfCalculate();
-        ob.getUniqueWordProject1(path1);
-        ob.getUniqueWordProject2(path2);
-        ob.IdfCal();
-        ob.tfIdfVectorProject1();
-        ob.tfIdfVectorProject2();
-        CosineSimilarity sim = new CosineSimilarity();
-        sim.getCosinesimilarity();
-       // sim.getAverage();
-        // BoxAndWhiskerChart.BoxWhisker();
+        // Step 5: Display results using a chart
         new BoxAndWhiskerChart().display();
-        CosineSimilarity.similarArray.clear();
-        //  BoxAndWhiskerChart.list.clear();
-        ProjectReader.projectOne.clear();
-        ProjectReader.projectTwo.clear();
 
-        TfIdfCalculate.tfidfvectorProject1.clear();
-
-        TfIdfCalculate.tfidfvectorProject2.clear();
-        ProjectFileName1.clear();
-        ProjectFileName2.clear();
-
+        // Step 6: Clear static data
+        clearStaticData();
     }
 }
